@@ -52,10 +52,10 @@ python app.py
 2. Start the frontend development server:
 ```bash
 cd frontend
-npm start
+npm run dev
 ```
 
-3. Access the application at `http://localhost:3000`
+3. Access the application at `http://localhost:5173`
 
 ## Usage
 1. Create Invoice:

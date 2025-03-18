@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timecard Correction Form</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/timecard.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body class="light-mode">
+  <div class="container">
+    <a href="/" class="back-btn" style="position: absolute; left: 20px; top: 20px;">← Back to Home</a>
+    <div class="header" style="margin-top: 50px;">
+      <div class="logo-container">
+        <h1>MERIT</h1>
+        <h2>ALUMINUM</h2>
+      </div>
+      <div class="theme-toggle-container">
+        <button id="theme-toggle" class="theme-toggle">
+          <span class="toggle-icon">🌙</span>
+          <span class="toggle-text">Dark Mode</span>
+        </button>
+      </div>
+    </div>
+    
+    <hr>
+    
+    <h2 class="form-title">Timecard Correction Form / Formato para Corrección de Tarjeta de Asistencia</h2>
+    
+    <hr>
+    
+    <form id="timecard-form">
+      <div class="form-row">
+        <label for="employee-name">Employee Name/Nombre del empleado:</label>
+        <input type="text" id="employee-name" name="employee-name" required>
+      </div>
+      
+      <div class="form-row two-columns">
+        <div>
+          <label for="department">Department/Departamento:</label>
+          <input type="text" id="department" name="department" required>
+        </div>
+        <div>
+          <label for="shift">Shift:</label>
+          <input type="text" id="shift" name="shift" required>
+        </div>
+      </div>
+      
+      <div class="timecard-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Date/Fecha</th>
+              <th>Time In<br>Tiempo de Entrada</th>
+              <th>Lunch Out</th>
+              <th>Lunch In</th>
+              <th>Time Out<br>Tiempo de Salida</th>
+              <th>Daily Total<br>Total Diario</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sunday<br>Domingo</td>
+              <td><input type="text" class="time-picker" name="sunday-time-in"></td>
+              <td><input type="text" class="time-picker" name="sunday-lunch-out"></td>
+              <td><input type="text" class="time-picker" name="sunday-lunch-in"></td>
+              <td><input type="text" class="time-picker" name="sunday-time-out"></td>
+              <td><input type="text" name="sunday-total" readonly></td>
+            </tr>
+            <tr>
+              <td>Monday<br>Lunes</td>
+              <td><input type="text" class="time-picker" name="monday-time-in"></td>
+              <td><input type="text" class="time-picker" name="monday-lunch-out"></td>
+              <td><input type="text" class="time-picker" name="monday-lunch-in"></td>
+              <td><input type="text" class="time-picker" name="monday-time-out"></td>
+              <td><input type="text" name="monday-total" readonly></td>
+            </tr>
+            <tr>
+              <td>Tuesday<br>Martes</td>
+              <td><input type="text" class="time-picker" name="tuesday-time-in"></td>
+              <td><input type="text" class="time-picker" name="tuesday-lunch-out"></td>
+              <td><input type="text" class="time-picker" name="tuesday-lunch-in"></td>
+              <td><input type="text" class="time-picker" name="tuesday-time-out"></td>
+              <td><input type="text" name="tuesday-total" readonly></td>
+            </tr>
+            <tr>
+              <td>Wednesday<br>Miércoles</td>
+              <td><input type="text" class="time-picker" name="wednesday-time-in"></td>
+              <td><input type="text" class="time-picker" name="wednesday-lunch-out"></td>
+              <td><input type="text" class="time-picker" name="wednesday-lunch-in"></td>
+              <td><input type="text" class="time-picker" name="wednesday-time-out"></td>
+              <td><input type="text" name="wednesday-total" readonly></td>
+            </tr>
+            <tr>
+              <td>Thursday<br>Jueves</td>
+              <td><input type="text" class="time-picker" name="thursday-time-in"></td>
+              <td><input type="text" class="time-picker" name="thursday-lunch-out"></td>
+              <td><input type="text" class="time-picker" name="thursday-lunch-in"></td>
+              <td><input type="text" class="time-picker" name="thursday-time-out"></td>
+              <td><input type="text" name="thursday-total" readonly></td>
+            </tr>
+            <tr>
+              <td>Friday<br>Viernes</td>
+              <td><input type="text" class="time-picker" name="friday-time-in"></td>
+              <td><input type="text" class="time-picker" name="friday-lunch-out"></td>
+              <td><input type="text" class="time-picker" name="friday-lunch-in"></td>
+              <td><input type="text" class="time-picker" name="friday-time-out"></td>
+              <td><input type="text" name="friday-total" readonly></td>
+            </tr>
+            <tr>
+              <td>Saturday<br>Sábado</td>
+              <td><input type="text" class="time-picker" name="saturday-time-in"></td>
+              <td><input type="text" class="time-picker" name="saturday-lunch-out"></td>
+              <td><input type="text" class="time-picker" name="saturday-lunch-in"></td>
+              <td><input type="text" class="time-picker" name="saturday-time-out"></td>
+              <td><input type="text" name="saturday-total" readonly></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="reason-section">
+        <h3>Reason:</h3>
+        <div class="checkbox-grid">
+          <div class="checkbox-item">
+            <input type="checkbox" id="failed-record" name="reason" value="Failed to record worked hours">
+            <label for="failed-record">Failed to record worked hours</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="forgot-clock" name="reason" value="Forgot to Clock In/Out">
+            <label for="forgot-clock">Forgot to Clock In/Out</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="incorrect-punch" name="reason" value="Incorrect Punch">
+            <label for="incorrect-punch">Incorrect Punch</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="time-clock-not-issued" name="reason" value="Time clock # Not Issued Yet">
+            <label for="time-clock-not-issued">Time clock # Not Issued Yet</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="power-outage" name="reason" value="Power Outage">
+            <label for="power-outage">Power Outage</label>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" id="time-clock-malfunction" name="reason" value="Time Clock Malfunction">
+            <label for="time-clock-malfunction">Time Clock Malfunction</label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="verification-text">
+        <p>By signing below I acknowledge and verify that the changes to the daily hours for the work week listed above are accurate.</p>
+        <p>Al firmar a continuación reconozco y rectifico que los cambios en la jornada de la semana de trabajo mencionados son exactos.</p>
+      </div>
+      
+      <div class="signature-section">
+        <div class="signature-row">
+          <div class="signature-field">
+            <label for="employee-print-name">Employee's Name<br>Nombre del empleado</label>
+            <input type="text" id="employee-print-name" name="employee-print-name" required>
+          </div>
+          <div class="signature-field">
+            <label for="employee-signature">Employee's Signature<br>Firma del Empleado</label>
+            <input type="text" id="employee-signature" name="employee-signature" required>
+          </div>
+          <div class="signature-field">
+            <label for="date">Date<br>Fecha</label>
+            <input type="text" id="date" name="date" class="date-picker" required>
+          </div>
+        </div>
+        
+        <hr>
+        
+        <div class="signature-row">
+          <div class="signature-field">
+            <label for="manager-name">Department Manager/Gerente de Departamento</label>
+            <input type="text" id="manager-name" name="manager-name" required>
+          </div>
+          <div class="signature-field">
+            <label for="manager-signature">Department Manager's Signature</label>
+            <input type="text" id="manager-signature" name="manager-signature" required>
+          </div>
+          <div class="signature-field">
+            <label for="manager-date">Date<br>Fecha</label>
+            <input type="text" id="manager-date" name="manager-date" class="date-picker" required>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="submit" class="submit-btn">Submit Form</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="{{ url_for('static', filename='js/timecard.js') }}"></script>
+</body>
+</html>

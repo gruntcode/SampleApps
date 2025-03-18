@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mileage Reimbursement Log</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/mileage.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body class="light-mode">
+  <div class="container">
+    <a href="/" class="back-btn" style="position: absolute; left: 20px; top: 20px;">← Back to Home</a>
+    <div class="header" style="margin-top: 50px;">
+      <div class="logo-container">
+        <div class="merit-logo">
+          <div class="merit-text">MERIT</div>
+          <div class="aluminum-text">ALUMINUM</div>
+          <div class="logo-underline"></div>
+        </div>
+      </div>
+      <div class="theme-toggle-container">
+        <button id="theme-toggle" class="theme-toggle">
+          <span class="toggle-icon">🌙</span>
+          <span class="toggle-text">Dark Mode</span>
+        </button>
+      </div>
+    </div>
+    
+    <hr>
+    
+    <h2 class="form-title">MILEAGE REIMBURSEMENT LOG</h2>
+    
+    <hr>
+    
+    <form id="mileage-form">
+      <div class="form-row two-columns">
+        <div>
+          <label for="employee-name">Employee:</label>
+          <input type="text" id="employee-name" name="employee-name" required>
+        </div>
+        <div>
+          <label for="branch">BRANCH:</label>
+          <input type="text" id="branch" name="branch" value="MERIT ALUMINUM" required>
+        </div>
+      </div>
+      
+      <div class="form-row two-columns">
+        <div>
+          <label for="week-ending">W/E:</label>
+          <input type="text" id="week-ending" name="week-ending" class="date-picker" required>
+        </div>
+        <div></div>
+      </div>
+      
+      <div class="mileage-table">
+        <table>
+          <thead>
+            <tr class="day-header">
+              <th colspan="5">MONDAY</th>
+            </tr>
+            <tr>
+              <th>DATE</th>
+              <th>POINT OF ORIGIN</th>
+              <th>ODOMETER START</th>
+              <th>ODOMETER END</th>
+              <th>TOTAL MILES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" class="date-picker" name="monday-date"></td>
+              <td><input type="text" name="monday-origin"></td>
+              <td><input type="number" name="monday-start" class="odometer-input"></td>
+              <td><input type="number" name="monday-end" class="odometer-input"></td>
+              <td><input type="number" name="monday-total" class="total-miles"></td>
+            </tr>
+            <tr>
+              <td colspan="5">
+                <div class="business-purpose">
+                  <label for="monday-purpose">BUSINESS PURPOSE:</label>
+                  <input type="text" id="monday-purpose" name="monday-purpose">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <table>
+          <thead>
+            <tr class="day-header">
+              <th colspan="5">TUESDAY</th>
+            </tr>
+            <tr>
+              <th>DATE</th>
+              <th>POINT OF ORIGIN</th>
+              <th>ODOMETER START</th>
+              <th>ODOMETER END</th>
+              <th>TOTAL MILES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" class="date-picker" name="tuesday-date"></td>
+              <td><input type="text" name="tuesday-origin"></td>
+              <td><input type="number" name="tuesday-start" class="odometer-input"></td>
+              <td><input type="number" name="tuesday-end" class="odometer-input"></td>
+              <td><input type="number" name="tuesday-total" class="total-miles"></td>
+            </tr>
+            <tr>
+              <td colspan="5">
+                <div class="business-purpose">
+                  <label for="tuesday-purpose">BUSINESS PURPOSE:</label>
+                  <input type="text" id="tuesday-purpose" name="tuesday-purpose">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <table>
+          <thead>
+            <tr class="day-header">
+              <th colspan="5">WEDNESDAY</th>
+            </tr>
+            <tr>
+              <th>DATE</th>
+              <th>POINT OF ORIGIN</th>
+              <th>ODOMETER START</th>
+              <th>ODOMETER END</th>
+              <th>TOTAL MILES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" class="date-picker" name="wednesday-date"></td>
+              <td><input type="text" name="wednesday-origin"></td>
+              <td><input type="number" name="wednesday-start" class="odometer-input"></td>
+              <td><input type="number" name="wednesday-end" class="odometer-input"></td>
+              <td><input type="number" name="wednesday-total" class="total-miles"></td>
+            </tr>
+            <tr>
+              <td colspan="5">
+                <div class="business-purpose">
+                  <label for="wednesday-purpose">BUSINESS PURPOSE:</label>
+                  <input type="text" id="wednesday-purpose" name="wednesday-purpose">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <table>
+          <thead>
+            <tr class="day-header">
+              <th colspan="5">THURSDAY</th>
+            </tr>
+            <tr>
+              <th>DATE</th>
+              <th>POINT OF ORIGIN</th>
+              <th>ODOMETER START</th>
+              <th>ODOMETER END</th>
+              <th>TOTAL MILES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" class="date-picker" name="thursday-date"></td>
+              <td><input type="text" name="thursday-origin"></td>
+              <td><input type="number" name="thursday-start" class="odometer-input"></td>
+              <td><input type="number" name="thursday-end" class="odometer-input"></td>
+              <td><input type="number" name="thursday-total" class="total-miles"></td>
+            </tr>
+            <tr>
+              <td colspan="5">
+                <div class="business-purpose">
+                  <label for="thursday-purpose">BUSINESS PURPOSE:</label>
+                  <input type="text" id="thursday-purpose" name="thursday-purpose">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <table>
+          <thead>
+            <tr class="day-header">
+              <th colspan="5">FRIDAY</th>
+            </tr>
+            <tr>
+              <th>DATE</th>
+              <th>POINT OF ORIGIN</th>
+              <th>ODOMETER START</th>
+              <th>ODOMETER END</th>
+              <th>TOTAL MILES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" class="date-picker" name="friday-date"></td>
+              <td><input type="text" name="friday-origin"></td>
+              <td><input type="number" name="friday-start" class="odometer-input"></td>
+              <td><input type="number" name="friday-end" class="odometer-input"></td>
+              <td><input type="number" name="friday-total" class="total-miles"></td>
+            </tr>
+            <tr>
+              <td colspan="5">
+                <div class="business-purpose">
+                  <label for="friday-purpose">BUSINESS PURPOSE:</label>
+                  <input type="text" id="friday-purpose" name="friday-purpose">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <table>
+          <thead>
+            <tr class="day-header">
+              <th colspan="5">SATURDAY</th>
+            </tr>
+            <tr>
+              <th>DATE</th>
+              <th>POINT OF ORIGIN</th>
+              <th>ODOMETER START</th>
+              <th>ODOMETER END</th>
+              <th>TOTAL MILES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" class="date-picker" name="saturday-date"></td>
+              <td><input type="text" name="saturday-origin"></td>
+              <td><input type="number" name="saturday-start" class="odometer-input"></td>
+              <td><input type="number" name="saturday-end" class="odometer-input"></td>
+              <td><input type="number" name="saturday-total" class="total-miles"></td>
+            </tr>
+            <tr>
+              <td colspan="5">
+                <div class="business-purpose">
+                  <label for="saturday-purpose">BUSINESS PURPOSE:</label>
+                  <input type="text" id="saturday-purpose" name="saturday-purpose">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <table>
+          <thead>
+            <tr class="day-header">
+              <th colspan="5">SUNDAY</th>
+            </tr>
+            <tr>
+              <th>DATE</th>
+              <th>POINT OF ORIGIN</th>
+              <th>ODOMETER START</th>
+              <th>ODOMETER END</th>
+              <th>TOTAL MILES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" class="date-picker" name="sunday-date"></td>
+              <td><input type="text" name="sunday-origin"></td>
+              <td><input type="number" name="sunday-start" class="odometer-input"></td>
+              <td><input type="number" name="sunday-end" class="odometer-input"></td>
+              <td><input type="number" name="sunday-total" class="total-miles"></td>
+            </tr>
+            <tr>
+              <td colspan="5">
+                <div class="business-purpose">
+                  <label for="sunday-purpose">BUSINESS PURPOSE:</label>
+                  <input type="text" id="sunday-purpose" name="sunday-purpose">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="totals-section">
+        <div class="total-business-miles">
+          <label>TOTAL BUSINESS MILES:</label>
+          <input type="number" id="total-business-miles" name="total-business-miles" readonly>
+        </div>
+        
+        <div class="reimbursement-calculation">
+          <div class="calculation-row">
+            <span>TOTAL MILES</span>
+            <input type="number" id="total-miles" name="total-miles" readonly>
+            <span>MULTIPLED BY</span>
+            <span class="rate-display">$ 0.70</span>
+            <span>EQUALS</span>
+            <span class="total-amount">$</span>
+            <input type="number" id="total-amount" name="total-amount" readonly>
+          </div>
+        </div>
+      </div>
+      
+      <div class="signature-section">
+        <div class="signature-row">
+          <div class="signature-field">
+            <label for="employee-signature">Employee Signature</label>
+            <input type="text" id="employee-signature" name="employee-signature" required>
+          </div>
+          <div class="signature-field">
+            <label for="approved-by">APPROVED BY</label>
+            <input type="text" id="approved-by" name="approved-by" required>
+          </div>
+          <div class="signature-field">
+            <label for="approval-date">DATE</label>
+            <input type="text" id="approval-date" name="approval-date" class="date-picker" required>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="submit" class="submit-btn">Submit Mileage Report</button>
+      </div>
+    </form>
+    
+    <div class="form-info">
+      <p>Form 606 Rev None 4/10/2017</p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="{{ url_for('static', filename='js/mileage.js') }}"></script>
+</body>
+</html>

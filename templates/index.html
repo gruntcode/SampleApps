@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GruntCode Invoice System</title>
+  <style>
+    :root {
+      --primary-color: #00ffff;
+      --secondary-color: #ff00ff;
+      --accent-purple: #9c27b0;
+      --success-green: #00ff9f;
+      --background-dark: #121212;
+      --background-paper: #1E1E1E;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-dark);
+      color: white;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .header {
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+    
+    .header h1 {
+      margin: 0;
+      color: var(--background-dark);
+    }
+    
+    .back-home {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: var(--background-dark);
+      color: var(--primary-color);
+      padding: 8px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s;
+    }
+    
+    .back-home:hover {
+      color: var(--secondary-color);
+    }
+    
+    .nav {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+    }
+    
+    .nav-btn {
+      background-color: var(--background-dark);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .nav-btn.active {
+      background-color: var(--accent-purple);
+    }
+    
+    .content {
+      background-color: var(--background-paper);
+      padding: 20px;
+      border-radius: 5px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--primary-color);
+    }
+    
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      background-color: #333;
+      border: 1px solid #555;
+      border-radius: 4px;
+      color: white;
+    }
+    
+    .btn {
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      border: none;
+      color: var(--background-dark);
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    
+    .items-container {
+      margin-top: 20px;
+    }
+    
+    .item-row {
+      display: flex;
+      margin-bottom: 10px;
+    }
+    
+    .item-row input {
+      margin-right: 10px;
+    }
+    
+    .item-list {
+      margin-top: 20px;
+    }
+    
+    .item {
+      background-color: #333;
+      padding: 10px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .total {
+      margin-top: 20px;
+      text-align: right;
+      font-size: 18px;
+      color: var(--success-green);
+      font-weight: bold;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th {
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid #444;
+      color: var(--primary-color);
+    }
+    
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #333;
+    }
+    
+    .status {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    .status-pending {
+      background-color: #FFD700;
+      color: #121212;
+    }
+    
+    .status-paid {
+      background-color: var(--success-green);
+      color: #121212;
+    }
+    
+    .status-overdue {
+      background-color: var(--secondary-color);
+      color: #121212;
+    }
+    
+    .paid-btn {
+      background-color: var(--success-green);
+      color: var(--background-dark);
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    
+    .paid-btn:hover {
+      background-color: #00cc7d;
+    }
+    
+    .paid-btn:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    
+    .create-invoice, .invoice-list {
+      display: none;
+    }
+    
+    .active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-home">← Back to Home</a>
+    <div class="header">
+      <h1>GruntCode Invoice System</h1>
+      <div class="nav">
+        <button class="nav-btn active" id="create-btn">Create Invoice</button>
+        <button class="nav-btn" id="list-btn">Track Invoices</button>
+      </div>
+    </div>
+    
+    <div class="content">
+      <!-- Create Invoice Form -->
+      <div class="create-invoice active" id="create-invoice">
+        <h2 style="color: var(--primary-color);">Create Invoice</h2>
+        
+        <form id="invoice-form">
+          <div class="form-group">
+            <label>Client Name:</label>
+            <input type="text" id="client-name" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Client Email:</label>
+            <input type="email" id="client-email" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Client Address:</label>
+            <textarea id="client-address" rows="3" required></textarea>
+          </div>
+          
+          <h3 style="color: var(--secondary-color);">Invoice Items</h3>
+          
+          <div class="item-row">
+            <input type="text" id="item-description" placeholder="Description" style="flex: 2;">
+            <input type="number" id="item-amount" placeholder="Amount" style="flex: 1;">
+            <button type="button" id="add-item" class="btn" style="margin-top: 0; background: var(--success-green);">Add</button>
+          </div>
+          
+          <div class="item-list" id="item-list">
+            <!-- Items will be added here dynamically -->
+          </div>
+          
+          <div class="total" id="total">Total: $0.00</div>
+          
+          <button type="submit" class="btn" style="width: 100%;">Generate & Send Invoice</button>
+        </form>
+      </div>
+      
+      <!-- Invoice List -->
+      <div class="invoice-list" id="invoice-list">
+        <h2 style="color: var(--primary-color);">Invoice Tracker</h2>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Invoice #</th>
+              <th>Client</th>
+              <th>Amount</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="invoices-table-body">
+            <!-- Sample data for demonstration -->
+            <tr>
+              <td>INV-20250314-001</td>
+              <td>Test Client</td>
+              <td>$1,250.00</td>
+              <td>2025-03-14</td>
+              <td>
+                <span class="status status-pending">Pending</span>
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>INV-20250313-002</td>
+              <td>Another Client</td>
+              <td>$850.50</td>
+              <td>2025-03-13</td>
+              <td>
+                <span class="status status-paid">Paid</span>
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Simple JavaScript for tab switching
+    document.addEventListener('DOMContentLoaded', function() {
+      const createBtn = document.getElementById('create-btn');
+      const listBtn = document.getElementById('list-btn');
+      const createInvoice = document.getElementById('create-invoice');
+      const invoiceList = document.getElementById('invoice-list');
+      
+      createBtn.addEventListener('click', function() {
+        createBtn.classList.add('active');
+        listBtn.classList.remove('active');
+        createInvoice.classList.add('active');
+        invoiceList.classList.remove('active');
+      });
+      
+      listBtn.addEventListener('click', function() {
+        listBtn.classList.add('active');
+        createBtn.classList.remove('active');
+        invoiceList.classList.add('active');
+        createInvoice.classList.remove('active');
+      });
+      
+      // Item handling
+      const addItemBtn = document.getElementById('add-item');
+      const itemDescription = document.getElementById('item-description');
+      const itemAmount = document.getElementById('item-amount');
+      const itemList = document.getElementById('item-list');
+      const totalElement = document.getElementById('total');
+      let items = [];
+      
+      addItemBtn.addEventListener('click', function() {
+        if (itemDescription.value && itemAmount.value) {
+          const amount = parseFloat(itemAmount.value);
+          items.push({
+            description: itemDescription.value,
+            amount: amount
+          });
+          
+          // Add to UI
+          const itemElement = document.createElement('div');
+          itemElement.className = 'item';
+          itemElement.innerHTML = `
+            <span><strong>${itemDescription.value}</strong></span>
+            <span>$${amount.toFixed(2)}</span>
+          `;
+          itemList.appendChild(itemElement);
+          
+          // Update total
+          const total = items.reduce((sum, item) => sum + item.amount, 0);
+          totalElement.textContent = `Total: $${total.toFixed(2)}`;
+          
+          // Clear inputs
+          itemDescription.value = '';
+          itemAmount.value = '';
+        }
+      });
+      
+      // Form submission
+      const invoiceForm = document.getElementById('invoice-form');
+      invoiceForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const clientName = document.getElementById('client-name').value;
+        const clientEmail = document.getElementById('client-email').value;
+        const clientAddress = document.getElementById('client-address').value;
+        
+        if (items.length === 0) {
+          alert('Please add at least one item to the invoice');
+          return;
+        }
+        
+        // Calculate total
+        const total = items.reduce((sum, item) => sum + item.amount, 0);
+        
+        // Create FormData object for file upload
+        const formData = new FormData();
+        formData.append('client_name', clientName);
+        formData.append('client_email', clientEmail);
+        formData.append('client_address', clientAddress);
+        formData.append('amount', total);
+        formData.append('items', JSON.stringify(items));
+        
+        // Show loading state
+        const submitBtn = invoiceForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.textContent = 'Generating...';
+        submitBtn.disabled = true;
+        
+        // Send to server
+        fetch('/api/invoice', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          alert('Invoice created and sent successfully!');
+          // Clear form
+          invoiceForm.reset();
+          items = [];
+          itemList.innerHTML = '';
+          totalElement.textContent = 'Total: $0.00';
+          
+          // Switch to invoice list tab
+          listBtn.click();
+          
+          // Refresh invoice list
+          fetchInvoices();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Error creating invoice: ' + error.message);
+        })
+        .finally(() => {
+          // Reset button state
+          submitBtn.textContent = originalBtnText;
+          submitBtn.disabled = false;
+        });
+      });
+      
+      // Fetch invoices from server
+      function fetchInvoices() {
+        const invoicesTableBody = document.getElementById('invoices-table-body');
+        
+        fetch('/api/invoices')
+          .then(response => response.json())
+          .then(invoices => {
+            // Clear existing rows
+            invoicesTableBody.innerHTML = '';
+            
+            if (invoices.length === 0) {
+              const row = document.createElement('tr');
+              row.innerHTML = '<td colspan="6" style="text-align: center;">No invoices found</td>';
+              invoicesTableBody.appendChild(row);
+              return;
+            }
+            
+            // Add each invoice to the table
+            invoices.forEach(invoice => {
+              const row = document.createElement('tr');
+              
+              // Determine status class
+              let statusClass = 'status-pending';
+              if (invoice.status === 'paid') {
+                statusClass = 'status-paid';
+              } else if (invoice.status === 'overdue') {
+                statusClass = 'status-overdue';
+              }
+              
+              // Create the paid button with appropriate state
+              const paidButtonDisabled = invoice.status === 'paid' ? 'disabled' : '';
+              const paidButtonText = invoice.status === 'paid' ? 'Paid' : 'Mark as Paid';
+              
+              row.innerHTML = `
+                <td>${invoice.invoice_number}</td>
+                <td>${invoice.client_name}</td>
+                <td>$${parseFloat(invoice.amount).toFixed(2)}</td>
+                <td>${invoice.date_created}</td>
+                <td>
+                  <span class="status ${statusClass}">${invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}</span>
+                </td>
+                <td>
+                  <button class="paid-btn" data-id="${invoice.id}" ${paidButtonDisabled}>${paidButtonText}</button>
+                </td>
+              `;
+              
+              invoicesTableBody.appendChild(row);
+              
+              // Add event listener to the paid button
+              const paidButton = row.querySelector('.paid-btn');
+              if (paidButton && !paidButton.disabled) {
+                paidButton.addEventListener('click', function() {
+                  markAsPaid(invoice.id, paidButton);
+                });
+              }
+            });
+          })
+          .catch(error => {
+            console.error('Error fetching invoices:', error);
+            invoicesTableBody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Error loading invoices</td></tr>';
+          });
+      }
+      
+      // Function to mark an invoice as paid
+      function markAsPaid(invoiceId, button) {
+        // Disable the button to prevent multiple clicks
+        button.disabled = true;
+        button.textContent = 'Processing...';
+        
+        fetch(`/api/invoice/${invoiceId}/paid`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ status: 'paid' })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          // Refresh the invoice list
+          fetchInvoices();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Error marking invoice as paid: ' + error.message);
+          // Re-enable the button
+          button.disabled = false;
+          button.textContent = 'Mark as Paid';
+        });
+      }
+      
+      // Initial fetch of invoices
+      fetchInvoices();
+    });
+  </script>
+</body>
+</html>
